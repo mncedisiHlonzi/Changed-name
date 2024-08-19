@@ -60,34 +60,62 @@
           <span class="circle one"></span>
           <span class="circle two"></span>
 
-          <form action="index.html" autocomplete="off">
+          <form name="submit-to-google-sheet" autocomplete="off">
             <h3 class="title">Contact us</h3>
             <div class="input-container">
-              <input type="text" name="name" class="input" />
-              <label for="">Name</label>
-              <span>Name</span>
+                <input type="text" name="name" class="input" required />
+                <label for="">Name</label>
+                <span>Name</span>
             </div>
             <div class="input-container">
-              <input type="email" name="email" class="input" />
-              <label for="">Email</label>
-              <span>Email</span>
+                <input type="email" name="email" class="input" required />
+                <label for="">Email</label>
+                <span>Email</span>
             </div>
             <div class="input-container">
-              <input type="tel" name="phone" class="input" />
-              <label for="">Phone</label>
-              <span>Phone</span>
+                <input type="tel" name="phone" class="input" required />
+                <label for="">Phone</label>
+                <span>Phone</span>
             </div>
             <div class="input-container textarea">
-              <textarea name="message" class="input"></textarea>
-              <label for="">Message</label>
-              <span>Message</span>
+                <textarea name="message" class="input" required></textarea>
+                <label for="">Message</label>
+                <span>Message</span>
             </div>
             <input type="submit" value="Send" class="btn" />
-          </form>
+        </form>
+        <span id="msg"></span>
         </div>
       </div>
     </div>
 
     <script src="app.js"></script>
+
+    <script>
+      const scriptURL = 'https://script.google.com/macros/s/AKfycbxEVu_mnf_ZpXfO2CwFg81ld2OZ8LN4yk0HE9bJt5BipGZI0iEM4K8qV4zLVgLPIe8s/exec';
+      const form = document.forms['submit-to-google-sheet'];
+      const msg = document.getElementById("msg");
+  
+      form.addEventListener('submit', e => {
+          e.preventDefault();
+          fetch(scriptURL, { method: 'POST', body: new FormData(form)})
+              .then(response => {
+                  if (response.ok) {
+                      msg.textContent = "Message sent successfully!";
+                      setTimeout(() => {
+                          msg.textContent = "";
+                      }, 3000);
+                      form.reset();
+                  } else {
+                      throw new Error('Network response was not ok.');
+                  }
+              })
+              .catch(error => {
+                  console.error('Error!', error.message);
+                  msg.textContent = "Error occurred. Please try again later.";
+              });
+      });
+  </script>
+
   </body>
 </html>
