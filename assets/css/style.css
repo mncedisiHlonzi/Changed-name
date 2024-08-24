@@ -568,9 +568,10 @@
   .product-list > * { display: none; }
   
   .product-list[data-filter="all"] > *,
-  .product-list[data-filter="accessory"] > .accessory,
-  .product-list[data-filter="decoration"] > .decoration,
-  .product-list[data-filter="furniture"] > .furniture {
+  .product-list[data-filter="wooden"] > .wooden,
+  .product-list[data-filter="suspended"] > .suspended,
+  .product-list[data-filter="pvc"] > .pvc,
+  .product-list[data-filter="rhinoboard"] > .rhinoboard{
     display: block;
     animation: fadeUp 1s ease forwards;
   }
